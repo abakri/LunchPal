@@ -30,6 +30,12 @@ Grab lunch with a stranger!
     4. `from app import db`
     5. `db.create_all()`
 
+
+# Run the Server
+1. make sure you are in the virtual environment `source venv/bin/activate`
+2. run flask `flask run`
+3. use the API with Postman or your browser!
+
 # Development Tips
 - If using vscode, install `pip install pylint-flask`, and add `"python.linting.pylintArgs": ["--load-plugins", "pylint_flask"]` to settings.json to remove any linting issues with SqlAlchemy
 - Post requests to the API must have a mimetype set to json/applications
