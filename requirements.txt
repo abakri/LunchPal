@@ -2,6 +2,7 @@ alembic==1.0.7
 aniso8601==4.1.0
 astroid==2.0.4
 certifi==2018.10.15
+chardet==3.0.4
 Click==7.0
 Flask==1.0.2
 flask-marshmallow==0.9.0
@@ -9,6 +10,7 @@ Flask-Migrate==2.3.1
 Flask-RESTful==0.3.7
 Flask-SQLAlchemy==2.3.2
 goodlogging==1.0.1
+idna==2.7
 isort==4.3.4
 itsdangerous==1.1.0
 Jinja2==2.10
@@ -29,10 +31,11 @@ python-editor==1.0.3
 pytz==2018.9
 rarfile==2.7
 regex==2018.11.22
-requests==2.6.0
+requests==2.20.0
 six==1.11.0
 SQLAlchemy==1.2.17
 typed-ast==1.1.0
+urllib3==1.24.1
 virtualenv==16.1.0
 virtualenv-clone==0.4.0
 Werkzeug==0.14.1
