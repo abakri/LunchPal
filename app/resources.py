@@ -92,6 +92,10 @@ class UserLogoutRefresh(Resource):
             return {'message': 'Something went wrong'}, 500      
 
 
+# this is used when we want to give the user a new access token without asking them to refresh
+# so essentially whenever they want to access protected api, if they don't have an access token, then
+# they should attempt to refresh token first
+# *** perhaps find a way to auto-refresh tokens in react ***
 class TokenRefresh(Resource):
     @jwt_refresh_token_required
     def post(self):

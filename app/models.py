@@ -31,6 +31,7 @@ class User(db.Model):
         # validate the password here
         pass
 
+
 class RevokedToken(db.Model):
     __tablename__ = 'revoked_tokens'
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +53,7 @@ class RevokedToken(db.Model):
 class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
+
 
 class RevokedTokenSchema(ma.ModelSchema):
     class Meta:
