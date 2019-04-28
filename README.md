@@ -40,6 +40,8 @@ Grab lunch with a stranger!
 - If using vscode, install `pip install pylint-flask`, and add `"python.linting.pylintArgs": ["--load-plugins", "pylint_flask"]` to settings.json to remove any linting issues with SqlAlchemy
 - Post requests to the API must have a mimetype set to json/applications
 - If you install new dependencies, run `pip freeze > requirements.txt` to add them to the dependencies
+- When making migrations run `flask db stamp head` then `flask db migrate`, then `flask db upgrade` to apply migration
 
 # Further Documentation
 1. Flask-User (`https://flask-user.readthedocs.io/en/latest/introduction.html`)
+2. Flask-JWT (`https://codeburst.io/jwt-authorization-in-flask-c63c1acf4eeb`)
