@@ -21,7 +21,7 @@ Grab lunch with a stranger!
     5. `psql postgres -U chow` (log in as lunchpal)
     6. `#CREATE DATABASE chowdb;`
     7. `#GRANT ALL PRIVILEGES ON DATABASE chowdb TO chow;`
-    8. `#\connect lunchpaldb`
+    8. `#\connect chowdb`
     9. `#\q`
 7. initialize the database
     1. `flask db init`
