@@ -15,7 +15,7 @@ class User(db.Model):
 
     # related data
     userprofile = db.relationship('UserProfile', backref='user', lazy=True, uselist=False) # uselist = False for one to one
-    signals = db.relationship('Signal', backref='user', lazy=True)
+    # signals = db.relationship('Signal', backref='user', lazy=True)
 
     # User Authentication fields
     username = db.Column(db.String(50), nullable=False, unique=True)
@@ -53,16 +53,16 @@ class UserProfile(db.Model):
     email = db.Column(db.String(50), nullable=False, unique=True) 
 
 
-class Signal(db.Model):
-    __tablename__ = 'signals'
-    id = db.Column(db.Integer, primary_key=True)
+# class Signal(db.Model):
+#     __tablename__ = 'signals'
+#     id = db.Column(db.Integer, primary_key=True)
 
-    # related data
-    institution_id = db.Column(db.Integer, db.ForeignKey('institutions.id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    active = db.Column(db.Boolean, nullable=False)
-    time = db.Column(db.DateTime, nullable=False, unique=True)
-    place = db.Column(db.String(20), nullable=False)
+#     # related data
+#     institution_id = db.Column(db.Integer, db.ForeignKey('institutions.id'))
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+#     active = db.Column(db.Boolean, nullable=False)
+#     time = db.Column(db.DateTime, nullable=False, unique=True)
+#     place = db.Column(db.String(20), nullable=False)
 
 
 class Institution(db.Model):
@@ -71,7 +71,7 @@ class Institution(db.Model):
 
     # related data
     members = db.relationship('UserProfile', backref='institution')
-    signals = db.relationship('UserSignal', backref='institution')
+    # signals = db.relationship('UserSignal', backref='institution')
 
     name = db.Column(db.String(50), nullable=False, unique=True)
 
@@ -140,6 +140,6 @@ class UserInterestSchema(ma.ModelSchema):
         model = UserInterest
 
 
-class SignalSchema(ma.ModelSchema):
-    class Meta:
-        model = UserInterest
+# class SignalSchema(ma.ModelSchema):
+#     class Meta:
+#         model = UserInterest

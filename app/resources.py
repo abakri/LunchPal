@@ -6,7 +6,7 @@ from flask_restful import Api, Resource, reqparse
 from app import api, db
 from app.models import (User, UserSchema, RevokedToken, RevokedTokenSchema,
                         UserProfile, UserProfileSchema, Institution, InstitutionSchema,
-                        Interest, InterestSchema, UserInterest, UserInterestSchema, SignalSchema)
+                        Interest, InterestSchema, UserInterest, UserInterestSchema)
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, 
                                 jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
@@ -30,8 +30,8 @@ interests_schema = InterestSchema(many=True)
 
 userinterest_schema = UserInterestSchema()
 
-signal_schema = SignalSchema()
-signals_schema = SignalSchema(many=True)
+# signal_schema = SignalSchema()
+# signals_schema = SignalSchema(many=True)
 
 revokedtoken_scheme = RevokedTokenSchema()
 
@@ -146,26 +146,28 @@ class UserLogoutRefresh(Resource):
         except:
             return {'message': 'Something went wrong'}, 500      
 
+# make match API
+
 
 # Signal functionality
 
-class PostSignal(Resource):
-    @jwt_required
-    def post(self):
-        parser.add_argument('time', required=True)
-        parser.add_argument('place', required=True)
+# class PostSignal(Resource):
+#     @jwt_required
+#     def post(self):
+#         parser.add_argument('time', required=True)
+#         parser.add_argument('place', required=True)
 
-        time = datetime.strptime(data['time'], '%Y-%m-%d %H:%M:%S')
-        signal = Signal(
-            time=time,
-            place=data['place'],
-        )
+#         time = datetime.strptime(data['time'], '%Y-%m-%d %H:%M:%S')
+#         signal = Signal(
+#             time=time,
+#             place=data['place']
+#         )
 
-        if not signal:
-            return {'message': 'We will send you a notification once we find you a match!'}
-        else:
-            # push notif for the first person
-            return user_schema.dump(signal.user)
+#         if not signal:
+#             return {'message': 'We will send you a notification once we find you a match!'}
+#         else:
+#             # push notif for the first person
+#             return user_schema.dump(signal.user)
 
 # this is used when we want to give the user a new access token without asking them to refresh
 # so essentially whenever they want to access protected api, if they don't have an access token, then
@@ -177,7 +179,13 @@ class TokenRefresh(Resource):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user)
         return {'access_token': access_token}
-      
+
+
+class VerifyToken(Resource):
+    @jwt_required
+    def post(self):
+        current
+
       
 class AllUsers(Resource):
     def get(self):

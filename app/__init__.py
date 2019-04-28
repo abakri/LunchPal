@@ -4,6 +4,7 @@ from flask_restful import Api
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 # ----------------------------
 #		APP CONFIG
@@ -28,6 +29,7 @@ ma = Marshmallow(app)
 jwt = JWTManager(app)
 api = Api(app)
 migrate = Migrate(app, db)
+CORS(app)
 
 # ----------------------------
 #		MIDDLEWARE
@@ -56,7 +58,7 @@ api.add_resource(resources.UserLogoutAccess, '/logout/access')
 api.add_resource(resources.UserLogoutRefresh, '/logout/refresh')
 api.add_resource(resources.TokenRefresh, '/token/refresh')
 api.add_resource(resources.AllUsers, '/users')
-api.add_resource(resources.PostSignal, '/postsignal')
+# api.add_resource(resources.PostSignal, '/postsignal')
 api.add_resource(resources.SecretResource, '/secret')
 
 # ----------------------------
