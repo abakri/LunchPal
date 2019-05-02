@@ -139,7 +139,6 @@ class UserInterestSchema(ma.ModelSchema):
     class Meta:
         model = UserInterest
 
-
 # class SignalSchema(ma.ModelSchema):
 #     class Meta:
 #         model = UserInterest

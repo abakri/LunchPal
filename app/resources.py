@@ -29,6 +29,7 @@ interest_schema = InterestSchema()
 interests_schema = InterestSchema(many=True)
 
 userinterest_schema = UserInterestSchema()
+userinterests_schema = UserInterestSchema(many=True)
 
 # signal_schema = SignalSchema()
 # signals_schema = SignalSchema(many=True)
@@ -113,7 +114,66 @@ class UserLogin(Resource):
             }
         else:
             return {'message': f"Wrong password"}, 400
-            
+
+
+# Match users for lunch
+class Match(Resource):
+    @jwt_required
+    def post(self):
+        parser.add_argument('user_id', required=True)
+        data = parser.parse_args()
+
+        user = User.query.filter_by(id=data['user_id']).first()
+        if not user:
+            return {'message': f"user with id {data['user_id']} doesn't exist"}, 400
+        institution_id = user.userprofile.institution_id
+        # matched user is in same institution and not the user themself
+        matched_user = User.query.filter(User.userprofile.has(institution_id=institution_id)) \
+                                 .filter(User.id != data['user_id']) \
+                                 .first()
+
+        if not matched_user:
+            return {'message': f"No users in your institution are available right now, try again later!"}, 200
+        else:
+            return {
+                'user': user_schema.dump(matched_user),
+                'profile': user_profile_schema.dump(matched_user.userprofile)
+            }
+
+
+class AddInterest(Resource):
+    @jwt_required
+    def post(self):
+        parser.add_argument('user_id', required=True)
+        parser.add_argument('interest_id', required=True)
+        data = parser.parse_args()
+
+        user = User.query.filter_by(id=data['user_id']).first()
+        interest = Interest.query.filter_by(id=data['interest_id']).first()
+        if not user or not interest:
+            return {'message': f"user id or interest id is invalid"}, 400
+
+        userinterest = UserInterest(userprofile_id=user.id, interest_id=interest.id)
+        user.userprofile.userinterest = userinterest
+        interest.userinterest = userinterest
+
+        try:
+            db.session.add(userinterest)
+            db.session.commit()
+            return {
+                'message': 'Interest successfully added!'
+            }
+        except:
+            return {
+                'message': 'Something went wrong!'
+            }, 500
+
+
+class GetInterests(Resource):
+    def get(self):
+        return interests_schema.dump(Interest.query.all())
+
+
 # class UpdateInterests(Resource):
 #     def post(self):
 #         parser.add_argument('')
@@ -146,9 +206,6 @@ class UserLogoutRefresh(Resource):
         except:
             return {'message': 'Something went wrong'}, 500      
 
-# make match API
-
-
 # Signal functionality
 
 # class PostSignal(Resource):
@@ -179,12 +236,6 @@ class TokenRefresh(Resource):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user)
         return {'access_token': access_token}
-
-
-class VerifyToken(Resource):
-    @jwt_required
-    def post(self):
-        current
 
       
 class AllUsers(Resource):
